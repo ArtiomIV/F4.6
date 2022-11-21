@@ -1,0 +1,38 @@
+openapi: 3.0.2
+info:
+  title: 'recipe service'
+  version: 1.0.0
+path:
+  /recipes/:
+   get:
+    operationId: recipeList
+    description: 'recipes list'
+    parameters: []
+    responses:
+      '200':
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Recipe'
+        description: ''
+      tags:
+      - recipes
+schemas:
+  Recipe:
+    type: object
+    properties:
+      id:
+        type: integer
+        readOnly: true
+      name:
+        type: string
+        maxLength: 20
+      price:
+        type: float
+      category:
+        type: integer
+      desc:
+        type: string
+        maxLength: 200

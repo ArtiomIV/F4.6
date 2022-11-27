@@ -1,11 +1,6 @@
 from .models import *
 from rest_framework import serializers
-
-class ReciperSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = Recipe
-        fields = ['id', 'name', 'price', 'category', 'products', 'desc']
-
+   
 class CategorySerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Category
@@ -16,7 +11,18 @@ class ProductSerializer(serializers.HyperlinkedModelSerializer):
         model = Product
         fields = ['id', 'name', 'price']
 
-class RecipeProducySerialaizer(serializers.HyperlinkedModelSerializer):
+class RecipeProducySerialaizer(serializers.ModelSerializer):
+    product = serializers.StringRelatedField()
+    recipe = serializers.StringRelatedField()
+
     class Meta:
         model = RecipeProduct
         fields = ['product', 'recipe', 'amount']
+
+class ReciperSerializer(serializers.ModelSerializer):
+    category = serializers.StringRelatedField()
+    products = RecipeProducySerialaizer(source='recipeproduct_set', many = True)
+
+    class Meta:
+        model = Recipe
+        fields = '__all__'

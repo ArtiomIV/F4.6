@@ -10,6 +10,10 @@ class Recipe(models.Model):
     category = models.ForeignKey('Category', on_delete = models.CASCADE)
     products = models.ManyToManyField('Product', through = 'RecipeProduct')
     desc = models.TextField(max_length = 300)
+    calories = models.IntegerField(default=0, null=True)
+    fat = models.IntegerField(default=0, null=True)
+    carbs = models.IntegerField(default=0, null=True)
+    protein = models.IntegerField(default=0, null=True)
 
     def __str__(self):
         return f'{self.name}'
